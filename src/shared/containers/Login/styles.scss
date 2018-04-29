@@ -1,0 +1,27 @@
+.login {
+	position: relative;
+	max-width: 365px;
+	width: 80%;
+	margin: 0 auto;
+	height: 100vh;
+}
+.container {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+}
+.content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	overflow: hidden;
+	padding-bottom: 10px;
+	box-sizing: border-box;
+}
+.text {
+	margin-bottom: 40px;
+	font-size: 20px;
+}
