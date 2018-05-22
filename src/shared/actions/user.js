@@ -6,14 +6,14 @@ const state = {
 	__typename: 'User',
 };
 
-export const handleSaveValues = gql`
+/* export const handleSaveValues = gql`
 mutation saveValues($value: String!, $name: String!) {
 	saveValues(value: $value, name: $name) @client {
 		name
 		id
 	}
 }
-`;
+`; */
 
 export const getUserData = gql`
 	query getData {

@@ -40,8 +40,11 @@
   "license": "ISC",
   "dependencies": {
     "@babel/preset-env": "^7.0.0-beta.36",
-    "apollo-boost": "^0.1.4",
-    "apollo-cache-inmemory": "^1.1.12",
+    "apollo-boost": "^0.1.5",
+    "apollo-cache-inmemory": "^1.2.0",
+    "apollo-client": "^2.3.0",
+    "apollo-link": "^1.2.2",
+    "apollo-link-error": "^1.0.9",
     "apollo-link-http": "^1.5.4",
     "axios": "^0.17.1",
     "babel-cli": "^6.26.0",

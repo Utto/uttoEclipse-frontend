@@ -7,15 +7,22 @@ import { handleAuth, getUserData } from 'actions/user';
 
 class PageContainer extends Component {
 	static propTypes = {
-		location: PropTypes.shape({
-			search: PropTypes.string,
+		history: PropTypes.shape({
+			location: PropTypes.shape({
+				search: PropTypes.string,
+			}),
 		}),
 		auth: PropTypes.func,
+		data: PropTypes.shape({
+			user: PropTypes.shape({
+				id: PropTypes.string,
+			}),
+		}),
 	}
 
 	componentDidMount() {
-		const { auth, location } = this.props;
-		const { search } = location;
+		const { auth, history } = this.props;
+		const { search } = history.location;
 		const code = search.slice(6, 36);
 		auth({ variables: { code } });
 	}
@@ -42,8 +49,8 @@ const Page = compose(
 	graphql(handleAuth, {
 		name: 'auth',
 		options: {
-			update: (store, { data: { auth } }) => {
-				store.writeQuery({ query: getUserData, data: { user: auth } });
+			update: (cache, { data: { auth } }) => {
+				cache.writeQuery({ query: getUserData, data: { user: auth } });
 			},
 		},
 	}),

@@ -43,12 +43,12 @@ export default [
 					],
 				},
 			},
-			/*{
+			{
 				loader: 'eslint-loader',
 				options: {
 					failOnError: true,
 				},
-			},*/
+			},
 		],
 	},
 	{

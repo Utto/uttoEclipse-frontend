@@ -1,0 +1,28 @@
+.list {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.item {
+	position: relative;
+	color: #808080;
+	margin-left: 20px;
+	&.active {
+		color: #3b4295;
+	}
+}
+.link {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	color: inherit;
+	transition: all 0.5s ease;
+	cursor: pointer;
+	&:hover {
+		color: #3b4295;
+	}
+}
