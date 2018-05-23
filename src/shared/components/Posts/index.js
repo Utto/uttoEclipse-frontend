@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import Next from 'material-ui/svg-icons/navigation/arrow-downward';
+import { Loader } from 'semantic-ui-react';
 
 const styles = require('./styles.scss');
 
@@ -14,6 +15,7 @@ export default class Posts extends Component {
 			date: PropTypes.string,
 		})),
 		loadMore: PropTypes.func,
+		loading: PropTypes.bool,
 	}
 
 	getPosts = () => {
@@ -31,7 +33,7 @@ export default class Posts extends Component {
 	}
 
 	render() {
-		const { loadMore } = this.props;
+		const { loadMore, loading } = this.props;
 		return (
 			<div className={styles.container}>
 				<Paper
@@ -40,9 +42,14 @@ export default class Posts extends Component {
 					<ul className={styles.list}>
 						{this.getPosts()}
 					</ul>
-					<IconButton onClick={loadMore}>
-						<Next />
-					</IconButton>
+					{!loading ?
+						<IconButton onClick={loadMore}>
+							<Next />
+						</IconButton>
+						:
+						<div className={styles.loading}>
+							<Loader active size="small" />
+						</div>}
 				</Paper>
 			</div>
 		);

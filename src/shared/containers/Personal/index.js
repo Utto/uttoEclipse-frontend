@@ -6,6 +6,7 @@ import { handleGetPosts, switchPage, getData } from 'actions/posts';
 
 import Header from 'components/Header';
 import Posts from 'components/Posts';
+import { Loading } from 'components/Loading';
 
 class PersonalContainer extends Component {
 	static propTypes = {
@@ -17,6 +18,7 @@ class PersonalContainer extends Component {
 		data: PropTypes.shape({
 			posts: PropTypes.array,
 			fetchMore: PropTypes.func,
+			loading: PropTypes.bool,
 		}),
 	}
 
@@ -40,14 +42,22 @@ class PersonalContainer extends Component {
 		return (
 			<div className={styles.content}>
 				<Header currentPath={history.location.pathname} />
-				{ data.loading ? <div>loading</div> : <Posts data={data.posts} loadMore={this.loadMore} />}
+				{data.loading && !data.posts ?
+					<Loading text="Loading data..." />
+					:
+					<Posts
+						data={data.posts}
+						loadMore={this.loadMore}
+						loading={data.loading}
+					/>
+				}
 			</div>
 		);
 	}
 }
 
 const Personal = compose(
-	graphql(handleGetPosts, { name: 'data' }),
+	graphql(handleGetPosts, { name: 'data', options: { notifyOnNetworkStatusChange: true } }),
 	graphql(switchPage, { name: 'switchPage' }),
 	graphql(getData, { name: 'test' }),
 )(PersonalContainer);
