@@ -35,7 +35,7 @@ export default class Posts extends Component {
 	render() {
 		const { loadMore, loading } = this.props;
 		return (
-			<div className={styles.container}>
+			<div className={styles.posts}>
 				<Paper
 					zDepth={3}
 				>

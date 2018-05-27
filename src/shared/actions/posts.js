@@ -6,8 +6,8 @@ const state = {
 };
 
 export const handleGetPosts = gql`
-	query Posts($checked: Boolean, $id: String) {
-		posts: getPosts(checked: $checked, id: $id), {
+	query Posts($checked: Boolean, $id: String, $filters: FiltersInput) {
+		posts: getPosts(checked: $checked, id: $id, filters: $filters), {
 			user,
 			message,
 			id,
