@@ -30,7 +30,8 @@ class PageContainer extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		const { history } = this.props;
-		if (nextProps.data.user.id) history.push('/personal');
+		const { data } = nextProps;
+		if (data.user.id && document.cookie && document.cookie.includes('token=')) history.push('/personal');
 	}
 
 	render() {

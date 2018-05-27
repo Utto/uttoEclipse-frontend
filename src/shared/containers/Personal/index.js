@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 
-import { handleGetPosts, switchPage, getData } from 'actions/posts';
+import { handleGetPosts, switchPage } from 'actions/posts';
 import { getFiltersData, changeFiltersData } from 'actions/filters';
 
 import Header from 'components/Header';
 import Posts from 'components/Posts';
 import Filters from 'components/Filters';
 import { Loading } from 'components/Loading';
+import { ErrorMessage } from 'components/ErrorMessage';
 
 class PersonalContainer extends Component {
 	static propTypes = {
@@ -27,6 +28,13 @@ class PersonalContainer extends Component {
 			filters: PropTypes.obj,
 		}),
 		handleChangeFiltersData: PropTypes.func,
+	}
+
+	componentWillReceiveProps() {
+		const { history } = this.props;
+		if (!document.cookie || !document.cookie.includes('token=')) {
+			history.push('/login');
+		}
 	}
 
 	loadMore = () => {
@@ -56,6 +64,12 @@ class PersonalContainer extends Component {
 		});
 	}
 
+	logout = () => {
+		const { history } = this.props;
+		document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		history.push('/login');
+	}
+
 	render() {
 		const styles = require('./styles.scss');
 		const {
@@ -65,11 +79,18 @@ class PersonalContainer extends Component {
 			handleChangeFiltersData,
 		} = this.props;
 
-		console.log('props', this.props);
+		const {
+			posts,
+			error,
+			loading,
+		} = data;
+
+
+		if (error) return <ErrorMessage err={error.graphQLErrors[0].message} />;
 		return (
 			<div className={styles.personal}>
-				<Header currentPath={history.location.pathname} />
-				{data.loading && !data.posts ?
+				<Header currentPath={history.location.pathname} logout={this.logout} />
+				{loading && !posts ?
 					<Loading text="Loading data..." />
 					:
 					<div className={styles.container}>
@@ -78,11 +99,11 @@ class PersonalContainer extends Component {
 							change={handleChangeFiltersData}
 							applyFilters={this.loadFiltered}
 						/>
-						<Posts
-							data={data.posts}
+						{posts && <Posts
+							data={posts}
 							loadMore={this.loadMore}
-							loading={data.loading}
-						/>
+							loading={loading}
+						/>}
 					</div>
 				}
 			</div>
@@ -91,9 +112,8 @@ class PersonalContainer extends Component {
 }
 
 const Personal = compose(
-	graphql(handleGetPosts, { name: 'data', options: { variables: {}, notifyOnNetworkStatusChange: true } }),
+	graphql(handleGetPosts, { name: 'data', options: { variables: { filters: {} }, notifyOnNetworkStatusChange: true } }),
 	graphql(switchPage, { name: 'switchPage' }),
-	graphql(getData, { name: 'test' }),
 	graphql(getFiltersData, { name: 'filtersData' }),
 	graphql(changeFiltersData, { name: 'handleChangeFiltersData' }),
 )(PersonalContainer);

@@ -18,14 +18,6 @@ export const handleGetPosts = gql`
 	}
 `;
 
-export const getData = gql`
-  query getData {
-    posts @client {
-			page
-		}
-  }
-`;
-
 export const switchPage = gql`
 	mutation switchPage($page: Int!) {
 		switchPage(page: $page) @client {

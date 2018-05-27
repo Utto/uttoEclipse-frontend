@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import config from 'helpers/config';
 
 export default class Login extends Component {
+	static propTypes = {
+		history: PropTypes.shape({
+			push: PropTypes.func,
+		}),
+	}
+
+
+	componentDidMount() {
+		const { history } = this.props;
+		if (document.cookie && document.cookie.includes('token=')) {
+			history.push('/personal');
+		}
+	}
+
 	handleClick = () => {
 		const redirectTo = `https://id.twitch.tv/oauth2/authorize
 			?response_type=code
@@ -17,7 +32,6 @@ export default class Login extends Component {
 
 	render() {
 		const styles = require('./styles.scss');
-		console.log(document.cookie);
 		return (
 			<div className={styles.login}>
 				<div className={styles.container}>

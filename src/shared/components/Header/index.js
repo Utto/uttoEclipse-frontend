@@ -7,16 +7,17 @@ import Menu from 'components/Menu';
 export default class Header extends Component {
 	static propTypes = {
 		currentPath: PropTypes.string,
+		logout: PropTypes.func,
 	}
 
 	render() {
 		const styles = require('./styles.scss');
-		const { currentPath } = this.props;
+		const { currentPath, logout } = this.props;
 		return (
 			<div className={styles.header}>
 				<div className={styles.container}>
 					<Logo />
-					<Menu currentPath={currentPath} />
+					<Menu currentPath={currentPath} logout={logout} />
 				</div>
 			</div>
 		);

@@ -8,9 +8,10 @@ const styles = require('./styles.scss');
 export default class Menu extends Component {
 	static propTypes = {
 		currentPath: PropTypes.string,
+		logout: PropTypes.func,
 	}
 	render() {
-		const { currentPath } = this.props;
+		const { currentPath, logout } = this.props;
 		const data = [
 			{ path: '/personal', icon: 'home' },
 			{ path: '/settings', icon: 'setting' },
@@ -31,7 +32,7 @@ export default class Menu extends Component {
 				{items}
 				<li className={styles.item}>
 					<div className={styles.link}>
-						<Icon name="log out" size="big" />
+						<Icon name="log out" size="big" onClick={logout} />
 					</div>
 				</li>
 			</ul>
